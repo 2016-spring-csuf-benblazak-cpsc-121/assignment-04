@@ -72,11 +72,9 @@ std::vector<int> merge_sort_recursive(const std::vector<int>& v){
         return v;
     }
     std::vector<int> left = v;
-    //left.erase((left.begin() + left.size()/2) + left.size()%2, left.end());
     left.erase((left.begin() + left.size()/2), left.end());
     
     std::vector<int> right = v;
-    //right.erase(right.begin(), right.begin() + right.size()/2 - (right.size()+1)%2);
     right.erase(right.begin(), right.begin() + right.size()/2);
     
     
