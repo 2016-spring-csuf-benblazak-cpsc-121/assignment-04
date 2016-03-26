@@ -1,0 +1,114 @@
+/* ----------------------------------------------------------------------------
+* Copyright &copy; 2016 Aaron Thompson <aamithompson@csu.fullerton.edu>
+* Released under the [MIT License] (http://opensource.org/licenses/MIT)
+* ------------------------------------------------------------------------- */
+
+/**
+* Two sorting algorithms specfically for integer vector types.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+void print_vector(const std::vector<int>&);
+void selection_sort(std::vector<int>&);
+void merge_sort(std::vector<int>&);
+std::vector<int> merge_sort_recursive(const std::vector<int>&);
+
+int main(){
+    std::cout << "----------------------------------------\n";
+    std::cout << "Selection Sort\n";
+    std::cout << "----------------------------------------\n";
+    std::vector<int> test_vector = {20, 64, 32, 256, 4, 88, 9, 2, 90, 35, 1008, 60, 55, 3, 4, 16, 13, 99};
+    std::cout << "Original Vector:\n";
+    print_vector(test_vector);
+    std::cout << "Sorted Vector:\n";
+    selection_sort(test_vector);
+    print_vector(test_vector);
+    
+    std::cout << "----------------------------------------\n";
+    std::cout << "Merge Sort\n";
+    std::cout << "----------------------------------------\n";
+    std::vector<int> test_vector2 = {64, 32, 2, 128, 1024, 512, 16, 384, 768, 4, 8, 2048, 12, 256, 2};
+    std::cout << "Original Vector:\n";
+    print_vector(test_vector2);
+    std::cout << "Sorted Vector:\n";
+    merge_sort(test_vector2);
+    print_vector(test_vector2);
+
+}
+
+void print_vector(const std::vector<int>& v){
+    for(int i = 0; i < v.size(); i++)
+        std::cout << v[i] << " ";
+    std::cout << '\n';
+}
+
+void selection_sort(std::vector<int>& v){
+    for(int i = 0; i < v.size() - 1; i++){
+        int highest_priority_index = i;
+        
+        for(int j = i; j < v.size(); j++){
+            if(v[j] < v[highest_priority_index]){
+                highest_priority_index = j;
+            }
+        }
+        
+        if (highest_priority_index != i){
+            int temp = v[i];
+            v[i] = v[highest_priority_index];
+            v[highest_priority_index] = temp;
+        }
+    }
+}
+
+void merge_sort(std::vector<int>& v){
+    v = merge_sort_recursive(v);
+}
+
+std::vector<int> merge_sort_recursive(const std::vector<int>& v){
+    if(v.size() < 2){
+        return v;
+    }
+    std::vector<int> left = v;
+    left.erase((left.begin() + left.size()/2), left.end());
+    
+    std::vector<int> right = v;
+    right.erase(right.begin(), right.begin() + right.size()/2);
+    
+    
+    left = merge_sort_recursive(left);
+    right = merge_sort_recursive(right);
+    
+    std::vector<int> sorted;
+    int j = 0;
+    
+    for(int i = 0; i < left.size(); i++){
+        for(; j < right.size(); j++){
+            //Checking if the left has priority, if it does break to get next i iteration.
+            if(left[i] <= right[j]){
+                sorted.push_back(left[i]);
+                
+                //Finishing right side of if left side is finished.
+                if(i == left.size()-1){
+                    sorted.insert(sorted.end(), right.begin() + j, right.end());
+                    j = right.size();
+                }
+                    
+                break;
+            }
+            
+            //Of course if the left is not added on, we must add on the right value;
+            sorted.push_back(right[j]);
+            
+            //Finishing left side of if right side is finished.              
+                if(j == right.size()-1){
+                    sorted.insert(sorted.end(), left.begin() + i, left.end());
+                    i = left.size();
+                }
+        }
+    }
+    
+    return sorted;
+}
