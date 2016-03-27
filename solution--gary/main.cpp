@@ -20,7 +20,7 @@ int main ()
     
     vector<int> v = {2, 8, 3, 4, 1};            //declaration of vector named v
     
-    func.merge_sort(v);                         //passing vector v as argument into func function
+    func.selection_sort(v);                         //passing vector v as argument into func function
     
     func.print_vector(v);                       //display vector output
 
