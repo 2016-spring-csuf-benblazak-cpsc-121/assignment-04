@@ -1,0 +1,97 @@
++// Assignment 04: Sorting Algorithms
++// Programmers: John Connell, Brandon Hawkinson, Roger Griffin, and Joseph Jacob M. Dungca
++//Instructor: Ben Blazak
++//Class: Computer Science 121
++
++#include <iostream>
++#include <vector>
++using std::cout;
++using std::endl;
++using std::vector;
++
++vector<int> selection_sort(vector<int> & a);
++void print_vector(const vector<int> & b);
++vector<int> merge_sort(const vector<int> & a);
++
++int main(){
++	vector<int> myVector{ 12, 8, 22, 48, 9, 18, 22 };
++	vector<int> myOtherVector{ 22, 0, 12, 33, 44, 2, 18 };
++	cout << "Original vector before Selection Sort: ";
++	print_vector(myVector);
++	myVector = selection_sort(myVector);
++	cout << "And now after Selection Sort: ";
++	print_vector(myVector);
++	cout << "Original vector before Merge Sort: ";
++	print_vector(myOtherVector);
++	myOtherVector = merge_sort(myOtherVector);
++	cout << "And now after Merge Sort: ";
++	print_vector(myOtherVector);
++	return 0;
++}
++
++vector<int> merge_sort(const vector<int> a){
++	if (a.size() <= 1)
++		return a;
++	int half_size = a.size() / 2;
++	vector<int> firstHalf(a.begin(), a.begin() + half_size);
++	vector<int> secondHalf(a.begin() + half_size, a.end());
++	
++	//seperating everything into its individual arrays
++	if (firstHalf.size() > 1){
++		firstHalf = merge_sort(firstHalf);
++  }
++	if (secondHalf.size() > 1){
++		secondHalf = merge_sort(secondHalf);
++	}
++	//going back and combining the elements
++	vector<int> temp;
++	do{
++			if (firstHalf[0] < secondHalf[0]){
++				temp.push_back(firstHalf[0]);
++				firstHalf.erase(firstHalf.begin());
++			}
++			else{
++				temp.push_back(secondHalf[0]);
++				secondHalf.erase(secondHalf.begin());
++			}
++	}while (!firstHalf.empty() && !secondHalf.empty());
++	
++	while (!firstHalf.empty()){
++		for (int i = 0; i < firstHalf.size(); i++)
++		{
++			temp.push_back(firstHalf[i]);
++			firstHalf.erase(firstHalf.begin() + i);
++		}
++	}
++	while (!secondHalf.empty()){
++		for (int i = 0; i < secondHalf.size(); i++)
++		{
++			temp.push_back(secondHalf[i]);
++			secondHalf.erase(secondHalf.begin() + i);
++		}
++	}
++	return temp;
++}
++
++vector<int> selection_sort(vector<int> a){
++	for (int i = 0; i < a.size(); i++){
++		int smallestLocal;
++		smallestLocal = i;
++		for (int j = i; j < a.size(); j++)
++		{
++			if (a[smallestLocal] > a[j])
++				smallestLocal = j;
++		}
++		int temp;
++		temp = a[i];
++		a[i] = a[smallestLocal];
++		a[smallestLocal] = temp;
++		}
++	return a;
++}
++
++void print_vector(vector<int> b){
++	for (int i = 0; i<b.size(); ++i)
++		cout << b[i] << ' ';
++	cout << endl;
++}
