@@ -1,0 +1,78 @@
+
+/* ----------------------------------------------------------------------------
+ * Copyright &copy; 2016 Joshua Ferrer <joshferrrer@csu.fullerton.edu>
+ * Released under the [MIT License] (http://opensource.org/licenses/MIT)
+ * ------------------------------------------------------------------------- */
+//
+//A program that tests selection sort and merge short
+//
+//
+// Sources referenced:
+//    https://en.wikipedia.org/wiki/Selection_sort
+
+
+
+#include <iostream>
+#include <vector>
+#include <cmath>                                //used for swap function
+
+
+using std::vector;
+using std::cout;
+using std::endl;
+using std::swap;
+
+void print_vector(const vector<int> &);
+void selection_sort(vector<int> &);
+vector<int> merge_sort(vector<int> &);
+
+//------------------------------------------------------------------------------
+int main()
+{
+    vector<int> v = { 24, 13, 30, 16, 5};
+    print_vector(v);                            //prints the vector to cout
+    
+    selection_sort(v);                          //prints sorted vector
+    
+    
+    return 0;
+}
+//------------------------------------------------------------------------------
+void print_vector(const vector<int> & p)
+{
+    for(int a = 0; a < p.size(); a++)
+        cout << p[a] << " ";
+    cout << endl;
+}
+
+void selection_sort(vector<int> & s)
+{
+    for (int a = 0; a < s.size()-1; a++){                     //compare elements in whole array s[0] --> size_of_vector - 1
+        int min = a;                                          //assume the min is the first element
+        for ( int b = a +1; b < s.size(); b++) {              //test for elements after 'a' to find smallest
+            if (s[b] < s[min])                                //if element after 'a' is smaller, replace min with new index
+                min = b;
+        }
+        if(min != a)
+            swap(s[a], s[min]);                               //swap element of array with the new found smallest element
+    }
+    
+    for(int c = 0; c < s.size(); c++)                         //prints out the newly sorted vector
+        cout << s[c] << " ";
+    cout << endl;
+    
+}
+
+vector<int> merge_sort(vector<int> & m){
+    if(m.size() <= 1)                                         //base case
+        return m;
+    
+    else{
+        
+        
+    }
+    
+    
+    vector<int> sorted{};
+    return sorted;
+}
