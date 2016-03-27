@@ -1,0 +1,85 @@
+#include <iostream>
+#include <vector>
+#include <iterator>
+#include <algorithm>
+////////////////////////////////////////////////////////////////////////////////////////
+//selection sort function if the name didn't give it away psh nerd;
+void selectionSort(std::vector<int> &v) {
+	int temp, mini;
+
+	for (int start = 0; start < v.size(); start++) {
+		mini = start;
+		for (int current = start + 1; current < v.size(); current++) {
+			if (v[current] < v[mini])
+				mini = current;
+		}
+		temp = v[start];
+		v[start] = v[mini];
+		v[mini] = temp;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+//merge sort stuff starts here
+std::vector<int> mergeSort(const std::vector<int> & merge) {
+
+	if (merge.size() < 2) {
+		return merge;
+	}
+	else {
+		std::size_t const middle = merge.size() / 2;
+		std::vector<int> merge_sort_left(merge.begin(), merge.begin() + middle);
+		std::vector<int> merge_sort_right(merge.begin() + middle, merge.end());
+
+		merge_sort_left = mergeSort(merge_sort_left);
+		merge_sort_right = mergeSort(merge_sort_right);
+
+		std::vector<int> sorted;
+		std::vector<int>::iterator left = merge_sort_left.begin();
+		std::vector<int>::iterator right = merge_sort_right.begin();
+		while (left != merge_sort_left.end() && right != merge_sort_right.end())
+			if (*left < *right)
+				sorted.push_back(*(left++));
+			else
+				sorted.push_back(*(right++));
+		while (left != merge_sort_left.end())
+			sorted.push_back(*(left++));
+		while (right != merge_sort_right.end())
+			sorted.push_back(*(right++));
+
+		return sorted;
+	}
+
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+//function prints out what ever its given (as it should)
+void print_vector(const std::vector<int> & printed) {
+	for (int i = 0; i < printed.size(); i++)
+		std::cout << printed[i] << " ";
+}
+
+int main() {
+	//selection Sorting stuff
+	//print out example array
+	std::cout << "----------Selection-Sort----------" << std::endl << "Let's use selection sort for this vector: ";
+	std::vector<int> my_list = { 5,4,3,2,1 };
+	print_vector(my_list); 
+	//print out selction sorted vector
+	std::cout << std::endl << "Sorted: ";
+	selectionSort(my_list);
+	print_vector(my_list); std::cout << std::endl;
+
+	//Merge Sort Stuff
+	std::cout << "----------Merge-Sort----------" << std::endl << "Let's use merge sort for this vector: ";
+	my_list = { 6,7,8,9,10 }; print_vector(my_list);
+	mergeSort(my_list);
+	std::cout << std::endl;
+	print_vector(my_list); std::cout << std::endl;
+
+	//system pause for vs if needed
+	system("Pause");
+	return 0;
+}
