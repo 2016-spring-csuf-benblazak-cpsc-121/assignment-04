@@ -1,0 +1,45 @@
+//
+//  main.cpp
+//  Assignment 4
+//
+//  Created by David Guan on 3/26/16.
+//  Copyright © 2016 David Guan. All rights reserved.
+//
+
+
+#include <iostream> 
+#include <vector> 
+
+using std::cout;
+using std::endl;
+
+using std::vector;
+
+
+int print_vector (const vector<int> &a) {
+    
+    cout << " " << &a << endl;
+    
+    return 0;
+    
+}
+
+
+int main () {
+    
+    
+
+    return 0;
+
+}
+
+int selection_sort (const vector<int> &b) {
+
+    return 0;
+}
+
+int merge_sort (const vector<int> &c) {
+    merge_sort()
+
+    return vector<int>;
+}
