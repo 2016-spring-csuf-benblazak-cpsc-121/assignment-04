@@ -8,7 +8,6 @@
  */
 
 #include <iostream>
-using std::cout;
 #include <vector>
 
 #include "vector.h"
