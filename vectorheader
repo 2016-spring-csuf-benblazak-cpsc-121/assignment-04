@@ -1,0 +1,115 @@
+/* ----------------------------------------------------------------------------
+* Copyright &copy; 2016 Ben Blazak <bblazak@fullerton.edu>
+* Released under the [MIT License] (http://opensource.org/licenses/MIT)
+* ------------------------------------------------------------------------- */
+
+/**
+*Vector function protopypes n functions
+*/
+#pragma once
+#include <iostream>
+#include <vector>
+using std::vector;
+
+void print_vector(const vector<int> &);
+void selection_sort(vector<int> &);
+vector<int> merge_sort(const vector<int>&);
+
+void print_vector(const vector<int> & a)
+{
+	for (int i = 0; i < a.size(); i++)
+	{
+		std::cout << a[i] << "|";
+	}
+	std::cout << std::endl;
+}
+
+void selection_sort(vector<int> & a)
+{
+	for (int i = 0; i < a.size(); i++)
+	{
+		int temp = a[i];
+		for (int j = i+1; j < a.size(); j++)
+		{
+			if (temp > a[j])
+			{
+				a[i] = a[j];
+				a[j] = temp;
+				temp = a[i];
+
+			}
+			else
+			{
+				continue;
+			}
+		}
+	}
+}
+
+vector<int> merge_sort(const vector<int>& a)
+{
+	vector<int> sorted;
+	//exceptions
+	if (a.size() == 1)
+	{
+		return a;
+	}
+	
+	//base case
+
+	std::size_t const half_size = a.size() / 2;
+	vector<int> lowhalf(a.begin(), a.begin() + half_size);
+	vector<int> highhalf(a.begin() + half_size, a.end());
+
+	merge_sort(lowhalf);
+	merge_sort(highhalf);
+
+	while (!highhalf.empty() && !lowhalf.empty())
+	{
+		int lowest, lowest2;
+		lowest = lowhalf[0];
+		int lowit = 0;
+		lowest2 = highhalf[0];
+		int highit = 0;
+
+		for (int i = 1; i < lowhalf.size(); i++)
+		{
+			if (lowest > lowhalf[i])
+			{
+				lowest = lowhalf[i];
+				lowit = i;
+			}
+		}
+		for (int i = 1; i < highhalf.size(); i++)
+		{
+			if (lowest2 > highhalf[i])
+			{
+				lowest2 = highhalf[i];
+				highit = i;
+			}
+		}
+
+
+		if (lowest > lowest2)
+		{
+			sorted.insert(sorted.end(), lowest2);
+			highhalf.erase(highhalf.begin() + highit);
+		}
+		if (lowest2 > lowest)
+		{
+			sorted.insert(sorted.end(), lowest);
+			lowhalf.erase(lowhalf.begin() + lowit);
+		}
+	}
+
+	if (lowhalf.empty())
+	{
+		sorted.insert(sorted.end(), highhalf.begin(), highhalf.end());
+	}
+	if (highhalf.empty())
+	{
+		sorted.insert(sorted.end(), lowhalf.begin(), lowhalf.end());
+	}
+	
+	return sorted;
+}
