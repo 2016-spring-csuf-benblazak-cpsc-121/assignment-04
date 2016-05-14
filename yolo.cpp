@@ -1,0 +1,111 @@
+#include <iostream>
+#include <vector>
+using std:: cin;
+using std::cout;
+using std::vector;
+using std::endl;
+void selection_sort(vector<int> & v){
+	int startscan;
+	int minValue;
+	int minIndex;
+	
+	for (startscan = 0; startscan < v.size()-1;startscan++){
+		minIndex = startscan;
+		minValue = v[startscan];
+		for (int index = startscan+1;index < v.size();index++){
+			if (v[index] < minValue){
+				minValue = v[index];
+				minIndex = index;
+			}
+		}
+		v[minIndex] = v[startscan];
+		v[startscan] = minValue;
+		
+		
+		
+	}
+}
+vector<int> merge_sort(vector<int> & v){
+	if (v.size() < 2)
+	return v;
+	
+	size_t const middle = v.size()/2;
+	vector<int> sorted;
+	vector<int> left;
+    vector<int> right;
+
+	for (int i = 0; i < middle; i++)
+		left.push_back(v[i]);
+	for (int i = middle; i < v.size(); i++)
+		right.push_back(v[i]);
+		
+
+	left = merge_sort(left);
+	right = merge_sort(right);
+	 int a= 0;
+	 int b = 0;
+	 
+	while (a < left.size() && b < right.size()){
+		if (left[a] < right[b]){
+			sorted.push_back(left[a]);
+			a++;
+		}
+		else {
+			sorted.push_back(right[b]);
+			b++;
+		}
+		
+	}
+	if ( a == left.size()){
+		
+			for (int j = b ; j < right.size();j++){
+			sorted.push_back(right[j]);
+			a++;
+		}
+	}
+	if (b == right.size()){
+		for (int i = a ; i < left.size();i++){
+			sorted.push_back(left[i]);
+			b++;
+		}
+	}	
+	
+	 
+		
+	
+ 
+
+	return sorted;
+}
+
+
+
+
+
+int main(){
+	//int arr[]= {5,2,3,1,4,6};
+vector<int> vectors[] = {
+       vector<int>{ 1, 2, 3, 4, 5, 6, 7, },
+       vector<int>{ 22, 1, 63, 67, 11, 17, 12, },
+       vector<int>{ 45, 53, 64, 7, 25, 79, 54, },
+       vector<int>{ 34, 21, 35, 84, 16, 10, 36, },
+       vector<int>{ 41, 2, 85, 94, 69, 9, 92, },
+    };
+	//vector<int> v(arr, arr + sizeof(arr)/sizeof(int));
+for(vector<int>&v: vectors){
+	for (int e : merge_sort(v))
+	cout << e << " ";
+	cout << endl;
+}
+//for (int e : merge_sort(v))
+//	cout << e << " " ;
+//	cout << endl;
+//selection_sort(v);
+//for (int e : v){
+//	cout << e << " ";
+//}
+
+
+	system("pause");
+	return 0;
+}
